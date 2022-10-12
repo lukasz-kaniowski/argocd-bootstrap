@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guestbook
+  name: nginx
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/argoproj/argocd-example-apps.git'
-    path: guestbook
-    targetRevision: HEAD
+    chart: nginx
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 13.2.10
   destination:
-    server: 'https://kubernetes.default.svc'
     namespace: {{.Values.namespace}}
+    server: https://kubernetes.default.svc
   syncPolicy:
-    automated: { }
+    automated: {}
     syncOptions:
       - CreateNamespace=true
